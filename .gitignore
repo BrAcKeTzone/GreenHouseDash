@@ -1,0 +1,4 @@
+# Ignore node_modules directories
+GH-Sensor-Dash/node_modules/
+GH-Sensor-Dash/dist/
+GH-Sensor-server/node_modules/
