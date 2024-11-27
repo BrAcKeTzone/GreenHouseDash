@@ -36,7 +36,7 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
     try {
         const sequelize = await sequelizePromise;
-        await sequelize.sync({ alter: false }); // Use { force: true } or { alter: true } during development to drop and recreate tables
+        await sequelize.sync({ force: true }); // Use { force: true } or { alter: true } during development to drop and recreate tables
         console.log("Connected to the database");
 
         app.listen(PORT, () => {
