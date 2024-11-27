@@ -9,7 +9,7 @@ const defineUserModel = async () => {
 
     const User = sequelize.define("User", {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             primaryKey: true,
             allowNull: false,
             unique: true,
