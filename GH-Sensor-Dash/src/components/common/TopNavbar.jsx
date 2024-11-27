@@ -8,22 +8,22 @@ import { RiDashboard2Line } from "react-icons/ri";
 import Logo from "../../assets/images/greenhouse.png";
 
 const TopNavbar = () => {
-  const Id = Cookies.get("SESSION_ID"); // Fetch session ID from cookies
+  // const Id = Cookies.get("SESSION_ID"); // Fetch session ID from cookies
   const Navigate = useNavigate();
   const location = useLocation();
 
   // Check if the current path is "/" or "/sig"
-  if (location.pathname === "/" || location.pathname === "/sig") {
-    return null; // Hide navbar on specific routes
-  }
+  // if (location.pathname === "/" || location.pathname === "/sig") {
+  //   return null; // Hide navbar on specific routes
+  // }
 
-  const handleSignOut = () => {
-    if (window.confirm("Are you sure you want to sign out?")) {
-      Cookies.remove("SESSION_ID"); // Remove session ID cookie
-      console.log("Signing out...");
-      Navigate("/"); // Redirect to home page
-    }
-  };
+  // const handleSignOut = () => {
+  //   if (window.confirm("Are you sure you want to sign out?")) {
+  //     Cookies.remove("SESSION_ID"); // Remove session ID cookie
+  //     console.log("Signing out...");
+  //     Navigate("/"); // Redirect to home page
+  //   }
+  // };
 
   return (
     <div
@@ -32,7 +32,7 @@ const TopNavbar = () => {
     >
       {/* Logo and Name */}
       <div className="flex items-center space-x-3">
-        <Link to="/dash" className="flex flex-rowv items-center">
+        <Link to="/" className="flex flex-rowv items-center">
           <img
             src={Logo}
             alt="Greenhouse Logo"
@@ -47,7 +47,7 @@ const TopNavbar = () => {
       {/* Profile Menu and Signout Button */}
       <div className="flex items-center space-x-4">
         <Link
-          to={location.pathname === "/htr" ? "/dash" : "/htr"} // Change link dynamically
+          to={location.pathname === "/htr" ? "/" : "/htr"} // Change link dynamically
           className="text-white hover:bg-blue-600 px-4 py-2 rounded-md text-sm font-medium flex items-center"
         >
           {location.pathname === "/htr" ? (
@@ -60,7 +60,7 @@ const TopNavbar = () => {
           </span>
         </Link>
 
-        <button className="text-white bg-blue-900 px-4 py-2 rounded-md text-sm font-medium flex items-center">
+        {/* <button className="text-white bg-blue-900 px-4 py-2 rounded-md text-sm font-medium flex items-center">
           <IoPersonCircleOutline className="text-sm md:text-2xl" />
           <span className="hidden md:inline ml-2">Authorized</span>
         </button>
@@ -71,7 +71,7 @@ const TopNavbar = () => {
         >
           <AiOutlineLogout className="text-sm md:text-2xl" />
           <span className="hidden md:inline ml-2">Sign Out</span>
-        </button>
+        </button> */}
       </div>
     </div>
   );

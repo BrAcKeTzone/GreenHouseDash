@@ -6,15 +6,15 @@ import { baseUrl, frames } from "../Data/frames";
 import { useEffect } from "react";
 
 const Dashboard = () => {
-  const Id = Cookies.get("SESSION_ID");
-  const Navigate = useNavigate();
+  // const Id = Cookies.get("SESSION_ID");
+  // const Navigate = useNavigate();
 
-  useEffect(() => {
-    if (!Id) {
-      alert("Session Expired!");
-      Navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!Id) {
+  //     alert("Session Expired!");
+  //     Navigate("/");
+  //   }
+  // }, []);
 
   const handleExport = (url) => {
     window.open(url, "_blank");

@@ -6,15 +6,15 @@ import api from "../api/api";
 import ResponsiveLineChart from "../components/ResponsiveLineChart";
 
 const History = () => {
-  const Id = Cookies.get("SESSION_ID"); // Fetch session ID from cookies
-  const Navigate = useNavigate();
+  // const Id = Cookies.get("SESSION_ID"); // Fetch session ID from cookies
+  // const Navigate = useNavigate();
 
-  useEffect(() => {
-    if (!Id) {
-      alert("Session Expired!");
-      Navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!Id) {
+  //     alert("Session Expired!");
+  //     Navigate("/");
+  //   }
+  // }, []);
 
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
