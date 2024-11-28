@@ -158,7 +158,7 @@ const Signup = () => {
                       type="button"
                       className="w-full p-3 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
                       onClick={() => handleSendOtp(values.email)}
-                      disabled={isOtpSent || isSubmitting}
+                      disabled={!values.email || isOtpSent || isSubmitting}
                     >
                       {isOtpSent ? `${countdown}s` : "Send OTP"}
                     </button>
