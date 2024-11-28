@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const sequelizePromise = require("./configs/sequelizeConfig");
 
- const authRouter = require("./routes/authRoutes");
+const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const adminRouter = require("./routes/adminRoutes");
 
@@ -13,9 +13,21 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3001 ;
 
-app.use(cors());
+const corsOptions = {
+    origin: [
+        "https://green.ghsensordash.online",
+        "http://localhost:4173",
+        "https://ghsensordash.online"
+    ],
+    methods: ["GET", "PUT", "POST", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // This allows cookies and other credentials to be sent
+};
+app.use(cors(corsOptions));
 
-app.options("*", cors());
+
+// Handle preflight requests
+app.options("*", cors(corsOptions));
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);

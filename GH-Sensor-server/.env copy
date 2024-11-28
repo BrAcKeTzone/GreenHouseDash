@@ -1,0 +1,11 @@
+DB_HOST=localhost
+DB_USER=ghseehri_ghsensor
+DB_PASSWORD=maniwangjp682
+DB_NAME=ghseehri_ghsensor_db
+
+PORT=3000
+SECRET_KEY=whatTheFuck
+
+MAIL_SERVICE=gmail
+MAIL_USER=mathsaya4kids@gmail.com
+MAIL_PASS=okwb kxxn voai bfsw
