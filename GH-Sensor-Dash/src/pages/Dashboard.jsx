@@ -1,21 +1,8 @@
 import React from "react";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 import "../assets/styles/Dashboard.css";
 import { baseUrl, frames } from "../Data/frames";
-import { useEffect } from "react";
 
 const Dashboard = () => {
-  // const Id = Cookies.get("SESSION_ID");
-  // const Navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!Id) {
-  //     alert("Session Expired!");
-  //     Navigate("/");
-  //   }
-  // }, []);
-
   const handleExport = (url) => {
     window.open(url, "_blank");
   };

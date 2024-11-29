@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import "../assets/styles/Dashboard.css"; // Assuming Dashboard.css has common styles
+import "../assets/styles/Dashboard.css";
 import api from "../api/api";
 import ResponsiveLineChart from "../components/ResponsiveLineChart";
 
 const History = () => {
-  // const Id = Cookies.get("SESSION_ID"); // Fetch session ID from cookies
-  // const Navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!Id) {
-  //     alert("Session Expired!");
-  //     Navigate("/");
-  //   }
-  // }, []);
-
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [latest, setLatest] = useState({
@@ -25,24 +13,25 @@ const History = () => {
     distance: 0,
     tds: 0,
   });
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0] // Default to current date
+  );
 
   const fetchData = async () => {
     try {
       const response = await api.get("/user/thingspeak");
       const json = response.data;
 
-      const feeds = json.feeds
-        ? json.feeds.map((feed) => ({
-            time: feed.created_at,
-            temperature: parseFloat(feed.field1) || 0,
-            humidity: parseFloat(feed.field2) || 0,
-            ph: parseFloat(feed.field3) || 0,
-            distance: parseFloat(feed.field4) || 0,
-            tds: parseFloat(feed.field5?.trim()) || 0,
-          }))
-        : [];
+      console.log("Fetched data:", json);
+
+      const feeds = json.map((feed) => ({
+        time: feed.createdAt,
+        temperature: feed.temperature,
+        humidity: feed.humidity,
+        ph: feed.ph,
+        distance: feed.distance,
+        tds: feed.tds,
+      }));
 
       setData(feeds);
 
@@ -61,23 +50,16 @@ const History = () => {
     }
   };
 
-  const filterData = () => {
-    if (startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      // Adjust end date to include the entire day
-      end.setHours(23, 59, 59, 999);
-
-      if (start > end) {
-        alert("Invalid date range: Start date must be before end date.");
-        setStartDate("");
-        setEndDate("");
-        return;
-      }
-
+  const filterDataByDate = () => {
+    if (selectedDate) {
+      const selectedDateObj = new Date(selectedDate);
       const filtered = data.filter((item) => {
         const itemDate = new Date(item.time);
-        return itemDate >= start && itemDate <= end;
+        return (
+          itemDate.getFullYear() === selectedDateObj.getFullYear() &&
+          itemDate.getMonth() === selectedDateObj.getMonth() &&
+          itemDate.getDate() === selectedDateObj.getDate()
+        );
       });
 
       setFilteredData(filtered);
@@ -93,8 +75,8 @@ const History = () => {
   }, []);
 
   useEffect(() => {
-    filterData();
-  }, [data, startDate, endDate]);
+    filterDataByDate();
+  }, [data, selectedDate]);
 
   return (
     <div className="flex flex-col">
@@ -104,26 +86,14 @@ const History = () => {
         </h1>
         <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
           <div className="flex flex-col">
-            <label htmlFor="startDate" className="text-sm">
-              Start Date
+            <label htmlFor="selectedDate" className="text-sm">
+              Select Date
             </label>
             <input
               type="date"
-              id="startDate"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="border rounded p-1 h-4"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="endDate" className="text-sm">
-              End Date
-            </label>
-            <input
-              type="date"
-              id="endDate"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              id="selectedDate"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
               className="border rounded p-1 h-4"
             />
           </div>
@@ -146,7 +116,7 @@ const History = () => {
           },
           { title: "pH Level (pH)", dataKey: "ph", domain: [-5, 20] },
           {
-            title: "Distance/Ultrasonic (m)",
+            title: "Distance/Ultrasonic (cm)",
             dataKey: "distance",
             domain: [15, 20],
           },

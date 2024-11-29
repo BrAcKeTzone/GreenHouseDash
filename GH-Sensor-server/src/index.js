@@ -3,10 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const sequelizePromise = require("./configs/sequelizeConfig");
 
- const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
-const adminRouter = require("./routes/adminRoutes");
-
 
 require("dotenv").config();
 
@@ -24,9 +21,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.use("/auth", authRouter);
 app.use("/user", userRouter);
-app.use("/admin", adminRouter);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -36,7 +31,7 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
     try {
         const sequelize = await sequelizePromise;
-        await sequelize.sync({ force: true }); // Use { force: true } or { alter: true } during development to drop and recreate tables
+        await sequelize.sync({ force: false }); // Use { force: true } or { alter: true } during development to drop and recreate tables
         console.log("Connected to the database");
 
         app.listen(PORT, () => {
