@@ -19,10 +19,12 @@ const History = () => {
 
   const fetchData = async () => {
     try {
-      const response = await api.get("/user/thingspeak");
+      const response = await api.get(`/user/thingspeak`, {
+        params: { date: selectedDate }, // Pass selected date as a query parameter
+      });
       const json = response.data;
 
-      console.log("Fetched data:", json);
+      console.log("Number of items in fetched data:", json.length);
 
       const feeds = json.map((feed) => ({
         time: feed.createdAt,
@@ -72,7 +74,7 @@ const History = () => {
     fetchData();
     const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedDate]);
 
   useEffect(() => {
     filterDataByDate();
